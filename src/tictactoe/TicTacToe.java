@@ -50,8 +50,8 @@ public class TicTacToe extends GameSearch {
     
     @Override
     public boolean reachedMaxDepth(Position p, int depth) {
-        
-        return false;
+        // If one of the two sides won the game are if it is a tied position
+        return (wonPosition(p, PROGRAM) || wonPosition(p, HUMAN) || tiedPosition(p));
     }
         
     @Override
