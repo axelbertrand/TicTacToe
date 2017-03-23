@@ -39,8 +39,65 @@ public class TicTacToe extends GameSearch {
 
     @Override
     public float positionEvaluation(Position p, boolean player) {
+        TicTacToePosition pos = (TicTacToePosition) p;
+        int playerValue = player ? 1 : -1;
+        int countPawn = 0;
+        int countPlayer = 0;
         
-        return 0.f;
+        /*
+        Si la partie est terminée alors
+            Si c'est une égalité, alors on retourne 0
+            Sinon
+                Si l'ordinateur a gagné, alors retourne 1000 (le maximum possible);
+                Sinon l'ordinateur a perdu, alors retourne -1000 (le minimum possible);
+                Fin Si
+            Fin Si
+        Sinon 
+            Soit la somme = 0
+            Pour chaque ligne, chaque colonne, chaque diagonale,
+               S'il y au moins un pion de chaque joueur, on ne fait rien
+               Sinon
+                    S'il y a 2 pions de l'adversaire, on enlève 30 à somme
+                    sinon s'il y a 2 pions du joueur de l'IA, on ajoute 30 à somme
+                    sinon s'il y a 1 pion de l'adversaire, on enlève 10 à somme
+                    sinon s'il y a 1 pion de l'IA, on ajoute 10 à somme
+                    Fin Si 
+               Fin Si
+            Fin Pour
+        Fin Si
+        */
+        
+        /*
+        // We check for every cell
+        for(int i = 0; i < 3; i++)
+        {
+            // If the cell is not empty
+            if(pos.board[i + 3*i] != TicTacToePosition.BLANK)
+            {
+                // We increment countPawn
+                countPawn++;
+                // If the cell is the current player
+                if(pos.board[i + 3*i] == playerValue)
+                    // We increment countPlayer
+                    countPlayer++;
+                else
+                    // We decrement countPlayer
+                    countPlayer--;
+            }
+        }*/
+        
+        if(wonPosition(p, player))
+        {
+            return 1000;
+        }
+        else if(tiedPosition(p))
+        {
+            return 0;
+        }
+        else
+        {
+            return -1000;
+        }
     }
     
     @Override
@@ -50,7 +107,7 @@ public class TicTacToe extends GameSearch {
     
     @Override
     public boolean reachedMaxDepth(Position p, int depth) {
-        // If one of the two sides won the game are if it is a tied position
+        // If one of the two sides won the game or if it is a tied position
         return (wonPosition(p, PROGRAM) || wonPosition(p, HUMAN) || tiedPosition(p));
     }
         
